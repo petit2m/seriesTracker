@@ -1,0 +1,32 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     symfony
+    database_user:     root
+    database_password: ~
+    # You should uncomment this if you want use pdo_sqlite
+    # database_path: "%kernel.root_dir%/data.db3"
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+    
+    # TVDB 
+    tvdb_server: 'http://thetvdb.com/api/'
+    tvdb_login: petit2mange
+    tvdb_password: ronico
+    tvdb_api_key: 143C6D4F34FE926E
+    tvdb_server_rest: 'https://api-dev.thetvdb.com'
+    
+    # BetaSeries
+    bs_server: 'https://api.betaseries.com/'
+    bs_api_key: eee22c4bdf48
+    bs_user: lte
+    bs_md5_password: 8f3241d896ce21ad783d4a89f9632366

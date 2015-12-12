@@ -1,0 +1,12 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+    serviceBS:
+        class:      AppBundle\Service\BS
+        arguments:  ["%bs_server%","%bs_api_key%","%bs_user%","%bs_md5_password%"]
+    serviceRestTvdb:
+        class:      AppBundle\Service\RestTvdb
+        arguments:  ["%tvdb_server_rest%","%tvdb_api_key%","%tvdb_login%","%tvdb_password%"]
