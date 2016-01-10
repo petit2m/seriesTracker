@@ -2,187 +2,400 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Season
- *
- * @ORM\Table(name="Season")
- * @ORM\Entity(repositoryClass="AppBundle\Entity\SeasonRepository")
- */
+* serie
+*
+* @ORM\Table(name="season")
+* @ORM\Entity(repositoryClass="AppBundle\Entity\SeasonRepository")
+*/
 class Season
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    * @var integer
+    *
+    * @ORM\Column(name="id", type="integer", nullable=false)
+    * @ORM\Id
+    * @ORM\GeneratedValue(strategy="IDENTITY")
+    */
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_episode", type="integer",nullable=true)
-     */
-    private $nbEpisode;
+    * @var integer
+    *
+    * @ORM\Column(name="number", type="integer", nullable=true)
+    */
+    private $number;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="nb_downloaded_episode", type="integer", nullable=true)
-     */
-    private $nbDownloadedEpisode;
+    * @var integer
+    *
+    * @ORM\Column(name="episode_count", type="integer", nullable=true)
+    */
+    private $episodeCount;
+
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="aired_episodes", type="integer", nullable=true)
+    */
+    private $airedEpisodes;
+
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="id_tvdb", type="integer", nullable=true)
+    */
+    private $idTvdb;
+
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="id_trakt", type="integer", nullable=true)
+    */
+    private $idTrakt;
     
     /**
-     * @var string
-     *
-     * @ORM\Column(name="id_serviio", type="string", length=25, nullable=true)
-     */
-    private $idServiio;
-
+    * @var text
+    *
+    * @ORM\Column(name="summary", type="text", nullable=true)
+    */
+    private $summary;
+  
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=45, nullable=true)
-     */
-    private $name;
-
+    * @var float
+    *
+    * @ORM\Column(name="rating", type="float", nullable=true)
+    */
+    private $rating;
+    
     /**
-     * @var \Serie
-     *
-     * @ORM\ManyToOne(targetEntity="Serie")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Serie_id", referencedColumnName="id")
-     * })
-     */
+    * @ORM\OneToMany(targetEntity="Episode",mappedBy="episode",cascade={"persist"})
+    */
+    private $episodes;
+    
+    /**
+    * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Image", cascade={"persist"})
+    */
+    private $images;   
+   
+    /**
+    * @var \serie
+    *
+    * @ORM\ManyToOne(targetEntity="Serie", inversedBy="seasons")
+    */
     private $serie;
-
-
+ 
+    /**
+    * Constructor
+    */
+    public function __construct()
+    {
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
-     * Get id
-     *
-     * @return integer 
-     */
+    * Get id
+    *
+    * @return integer
+    */
     public function getId()
     {
         return $this->id;
     }
 
     /**
-     * Set idTvdb
-     *
-     * @param integer $idTvdb
-     * @return Season
-     */
-    public function setIdTvdb($idTvdb)
+    * Set number
+    *
+    * @param integer $number
+    *
+    * @return Season
+    */
+    public function setNumber($number)
     {
-        $this->idTvdb = $idTvdb;
-    
+        $this->number = $number;
+
         return $this;
     }
 
     /**
-     * Get idTvdb
-     *
-     * @return integer 
-     */
+    * Get number
+    *
+    * @return integer
+    */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+    * Set episodeCount
+    *
+    * @param integer $episodeCount
+    *
+    * @return Season
+    */
+    public function setEpisodeCount($episodeCount)
+    {
+        $this->episodeCount = $episodeCount;
+
+        return $this;
+    }
+
+    /**
+    * Get episodeCount
+    *
+    * @return integer
+    */
+    public function getEpisodeCount()
+    {
+        return $this->episodeCount;
+    }
+
+    /**
+    * Set airedEpisode
+    *
+    * @param integer $airedEpisode
+    *
+    * @return Season
+    */
+    public function setAiredEpisode($airedEpisode)
+    {
+        $this->airedEpisode = $airedEpisode;
+
+        return $this;
+    }
+
+    /**
+    * Get airedEpisode
+    *
+    * @return integer
+    */
+    public function getAiredEpisode()
+    {
+        return $this->airedEpisode;
+    }
+
+    /**
+    * Set idTvdb
+    *
+    * @param integer $idTvdb
+    *
+    * @return Season
+    */
+    public function setIdTvdb($idTvdb)
+    {
+        $this->idTvdb = $idTvdb;
+
+        return $this;
+    }
+
+    /**
+    * Get idTvdb
+    *
+    * @return integer
+    */
     public function getIdTvdb()
     {
         return $this->idTvdb;
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return Season
-     */
-    public function setName($name)
+    * Set idTrakt
+    *
+    * @param integer $idTrakt
+    *
+    * @return Season
+    */
+    public function setIdTrakt($idTrakt)
     {
-        $this->name = $name;
-    
+        $this->idTrakt = $idTrakt;
+
         return $this;
     }
 
     /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
+    * Get idTrakt
+    *
+    * @return integer
+    */
+    public function getIdTrakt()
     {
-        return $this->name;
+        return $this->idTrakt;
     }
 
     /**
-     * Set serie
-     *
-     * @param \Samsung\ServiioAppBundle\Entity\Serie $serie
-     * @return Season
-     */
-    public function setSerie(Serie $serie = null)
+    * Set summary
+    *
+    * @param string $summary
+    *
+    * @return Season
+    */
+    public function setSummary($summary)
+    {
+        $this->summary = $summary;
+
+        return $this;
+    }
+
+    /**
+    * Get summary
+    *
+    * @return string
+    */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
+    * Set rating
+    *
+    * @param integer $rating
+    *
+    * @return Season
+    */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    /**
+    * Get rating
+    *
+    * @return integer
+    */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
+    * Add image
+    *
+    * @param \AppBundle\Entity\Image $image
+    *
+    * @return Season
+    */
+    public function addImage(\AppBundle\Entity\Image $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+    * Remove image
+    *
+    * @param \AppBundle\Entity\Image $image
+    */
+    public function removeImage(\AppBundle\Entity\Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+    * Get images
+    *
+    * @return \Doctrine\Common\Collections\Collection
+    */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+    * Set serie
+    *
+    * @param \AppBundle\Entity\Serie $serie
+    *
+    * @return Season
+    */
+    public function setSerie(\AppBundle\Entity\Serie $serie = null)
     {
         $this->serie = $serie;
-    
+
         return $this;
     }
 
     /**
-     * Get serie
-     *
-     * @return \Samsung\ServiioAppBundle\Entity\Serie 
-     */
+    * Get serie
+    *
+    * @return \AppBundle\Entity\Serie
+    */
     public function getSerie()
     {
         return $this->serie;
     }
 
     /**
-     * Set nbEpisode
-     *
-     * @param integer $nbEpisode
-     * @return Season
-     */
-    public function setNbEpisode($nbEpisode)
+    * Set airedEpisodes
+    *
+    * @param integer $airedEpisodes
+    *
+    * @return Season
+    */
+    public function setAiredEpisodes($airedEpisodes)
     {
-        $this->nbEpisode = $nbEpisode;
+        $this->airedEpisodes = $airedEpisodes;
 
         return $this;
     }
 
     /**
-     * Get nbEpisode
-     *
-     * @return integer 
-     */
-    public function getNbEpisode()
+    * Get airedEpisodes
+    *
+    * @return integer
+    */
+    public function getAiredEpisodes()
     {
-        return $this->nbEpisode;
+        return $this->airedEpisodes;
+    }
+    
+    public function getImagesByTypeAndFormat($type, $format) {
+        $newerCriteria = Criteria::create()
+            ->where(Criteria::expr()->eq('type', $type))
+                ->andWhere(Criteria::expr()->eq('format', $format));               
+
+        return $this->getImages()->matching($newerCriteria);
     }
 
     /**
-     * Set nbDownloadedEpisode
+     * Add episode
      *
-     * @param integer $nbDownloadedEpisode
+     * @param \AppBundle\Entity\Episode $episode
+     *
      * @return Season
      */
-    public function setNbDownloadedEpisode($nbDownloadedEpisode)
+    public function addEpisode(\AppBundle\Entity\Episode $episode)
     {
-        $this->nbDownloadedEpisode = $nbDownloadedEpisode;
-
+        $this->episodes[] = $episode;
+        $episode->setSeason($this);
+        
         return $this;
     }
 
     /**
-     * Get nbDownloadedEpisode
+     * Remove episode
      *
-     * @return integer 
+     * @param \AppBundle\Entity\Episode $episode
      */
-    public function getNbDownloadedEpisode()
+    public function removeEpisode(\AppBundle\Entity\Episode $episode)
     {
-        return $this->nbDownloadedEpisode;
+        $this->episodes->removeElement($episode);
+    }
+
+    /**
+     * Get episodes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEpisodes()
+    {
+        return $this->episodes;
     }
 }

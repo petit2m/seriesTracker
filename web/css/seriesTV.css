@@ -1,0 +1,292 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+body {
+  padding-bottom: 40px;
+  color: #5a5a5a;
+}
+
+.thumbnail{
+  height:242.5px;    
+}
+#banner-serie{
+/*   position:relative;*/
+}
+
+.banner{
+   width:100%;
+}
+
+.info-wrapper{
+position: absolute;
+width: 100%;
+bottom:0;
+background-color: rgba(0,0,0,0.5);
+height: 40px;
+line-height: 40px;
+text-align:center;
+color: rgba(221, 221, 221, 0.85);
+}
+
+header{
+  position:relative;
+  height:100%;
+}
+
+
+/* BOX*/
+.info-box{
+ height: 150px;
+/* border: 1px solid #ddd;*/
+
+}
+
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+
+.modal-dialog {
+    width:800px;
+}
+
+.modal-title{
+    text-align:center;
+}
+.modal-footer p{
+    text-align:left;
+}
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 20;
+  opacity: 0.75;
+}
+
+/* Flip around the padding for proper display in narrow viewports */
+.navbar-wrapper > .container {
+  padding-right: 0;
+  padding-left: 0;
+}
+.navbar-wrapper .navbar {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.navbar-wrapper .navbar .container {
+  width: auto;
+}
+
+.nav-right {
+  float:right;
+}
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  height: 200px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  height: 200px;
+  background-color: #777;
+}
+.carousel-inner > .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 500px;
+}
+
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.main .miniature {
+  margin-bottom: 20px;
+  text-align: center;
+  
+}
+.main h2 {
+  font-weight: normal;
+}
+.main .miniature p {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.main{
+  padding-top : 20px;
+}
+
+.main .miniature .col-lg-4{
+    height : 215px;
+}
+
+/* Featurettes
+------------------------- */
+
+.featurette-divider {
+  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+/* PORTRAIT 
+---------------------------------*/
+.portrait{
+    height:180px;
+    padding:5px;
+}
+
+.portrait .h5,
+.portrai .h6{
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+/* SEASON
+---------------------------------*/
+.seasons {
+    width: 80%;
+    align-items:center;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+.season h2{
+    text-align:center;
+}
+.season .col-lg-5,
+.season .col-lg-7{
+    height: 500px;
+    margin-bottom: 40px;
+}
+
+
+.season .col-lg-7{
+    -webkit-columns: 2;
+    -moz-columns: 2;
+    columns: 2;
+}
+
+
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 768px) {
+  /* Navbar positioning foo */
+  .navbar-wrapper {
+    margin-top: 20px;
+  }
+  .navbar-wrapper .container {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .navbar-wrapper .navbar {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  /* The navbar becomes detached from the top, so we round the corners */
+  .navbar-wrapper .navbar {
+    border-radius: 4px;
+  }
+
+  /* Bump up size of carousel content */
+  .carousel-caption p {
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: 1.4;
+  }
+
+  .featurette-heading {
+    font-size: 50px;
+  }
+}
+
+@media (min-width: 992px) {
+  .featurette-heading {
+    margin-top: 120px;
+  }
+}
+
+/* CONSOLE
+------------------------------------------------------ */
+.huge {
+    font-size: 40px;
+}
+
+.panel-green {
+    border-color: #5cb85c;
+}
+
+.panel-green .panel-heading {
+    border-color: #5cb85c;
+    color: #fff;
+    background-color: #5cb85c;
+}
+
+.panel-green a {
+    color: #5cb85c;
+}
+
+.panel-green a:hover {
+    color: #3d8b3d;
+}
+
+.panel-red {
+    border-color: #d9534f;
+}
+
+.panel-red .panel-heading {
+    border-color: #d9534f;
+    color: #fff;
+    background-color: #d9534f;
+}
+
+.panel-red a {
+    color: #d9534f;
+}
+
+.panel-red a:hover {
+    color: #b52b27;
+}
+
+.panel-yellow {
+    border-color: #f0ad4e;
+}
+
+.panel-yellow .panel-heading {
+    border-color: #f0ad4e;
+    color: #fff;
+    background-color: #f0ad4e;
+}
+
+.panel-yellow a {
+    color: #f0ad4e;
+}
+
+.panel-yellow a:hover {
+    color: #df8a13;
+}

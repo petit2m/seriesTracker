@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class SerieRepository extends EntityRepository
 {
-    public function getUnfinished()
+    public function getMySerie()
     {
         return $this->createQueryBuilder('s')
             ->where('s.remaining > 0 and s.archived = 0')
@@ -23,17 +23,16 @@ class SerieRepository extends EntityRepository
     public function findAll()
     {
         return $this->createQueryBuilder('s')
-            ->orderBy('s.name')
+            ->orderBy('s.title')
             ->getQuery()
             ->getResult();
     }
     
-    public function findExisting($id, $name)
+    public function findExisting($id)
     {
-        $name = addslashes($name);
         return $this->createQueryBuilder('s')
-            ->where('s.idServiio = :id or s.name = :name')
-            ->setParameters(array('id' => $id, 'name' => $name)) 
+            ->where('s.idTrakt = :id')
+            ->setParameters(array('id' => $id)) 
             ->getQuery()
             ->getResult();
     }

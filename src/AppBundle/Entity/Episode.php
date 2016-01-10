@@ -5,87 +5,88 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Episode
- *
- * @ORM\Table(name="Episode")
- * @ORM\Entity(repositoryClass="AppBundle\Entity\EpisodeRepository")
- */
+* Actor
+*
+* @ORM\Table(name="episode")
+* @ORM\Entity
+*/
 class Episode
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    * @var integer
+    *
+    * @ORM\Column(name="id", type="integer", nullable=false)
+    * @ORM\Id
+    * @ORM\GeneratedValue(strategy="IDENTITY")
+    */
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id_tvdb", type="integer", nullable=true)
-     */
-    private $idTvdb;
-
+    * @var integer
+    *
+    * @ORM\Column(name="id_trakt", type="integer", nullable=false)
+    */
+    private $idTrakt;
+ 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="number", type="boolean", nullable=true)
-     */
+    * @var integer
+    *
+    * @ORM\Column(name="number", type="integer", nullable=false)
+    */
     private $number;
-
+ 
+     /**
+    * @var integer
+    *
+    * @ORM\Column(name="id_tvdb", type="integer", nullable=true)
+    */
+    private $idTvdb;
+     
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=150, nullable=true)
-     */
-    private $name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="overview", type="text", nullable=true)
-     */
-    private $overview;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="first_aired", type="string", length=45, nullable=true)
-     */
-    private $firstAired;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="downloaded", type="boolean",options={"default":0} )
-     */
-    private $downloaded=0;
+    * @var string
+    *
+    * @ORM\Column(name="title", type="string", length=150, nullable=false)
+    */
+    private $title;
     
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="watched", type="boolean", options={"default":0})
-     */
-    private $watched=0;
-
+    * @var string
+    *
+    * @ORM\Column(name="summary", type="text", nullable=true)
+    */
+    private $summary;
+    
     /**
-     * @var \Season
-     *
-     * @ORM\ManyToOne(targetEntity="Season")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Season_id", referencedColumnName="id")
-     * })
-     */
-    private $season;
+    * @var datetimetz
+    *
+    * @ORM\Column(name="aired", type="datetimetz", nullable=true)
+    */
+    private $aired;
+  
+    /**
+   * @var integer
+   *
+   * @ORM\Column(name="rating", type="float", nullable=true)
+   */
+   private $rating;
 
+   /**
+   * @var \season
+   *
+   * @ORM\ManyToOne(targetEntity="season", inversedBy="episodes")
+   */
+   private $season;
 
+   /**
+   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Image", cascade={"persist"})
+   */
+   private $images;   
+  
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -93,45 +94,47 @@ class Episode
     }
 
     /**
-     * Set idTvdb
+     * Set idTrakt
      *
-     * @param integer $idTvdb
+     * @param integer $idTrakt
+     *
      * @return Episode
      */
-    public function setIdTvdb($idTvdb)
+    public function setIdTrakt($idTrakt)
     {
-        $this->idTvdb = $idTvdb;
-    
+        $this->idTrakt = $idTrakt;
+
         return $this;
     }
 
     /**
-     * Get idTvdb
+     * Get idTrakt
      *
-     * @return integer 
+     * @return integer
      */
-    public function getIdTvdb()
+    public function getIdTrakt()
     {
-        return $this->idTvdb;
+        return $this->idTrakt;
     }
 
     /**
      * Set number
      *
-     * @param boolean $number
+     * @param integer $number
+     *
      * @return Episode
      */
     public function setNumber($number)
     {
         $this->number = $number;
-    
+
         return $this;
     }
 
     /**
      * Get number
      *
-     * @return boolean 
+     * @return integer
      */
     public function getNumber()
     {
@@ -139,163 +142,211 @@ class Episode
     }
 
     /**
-     * Set name
+     * Set idTvdb
      *
-     * @param string $name
+     * @param integer $idTvdb
+     *
      * @return Episode
      */
-    public function setName($name)
+    public function setIdTvdb($idTvdb)
     {
-        $this->name = $name;
-    
+        $this->idTvdb = $idTvdb;
+
         return $this;
     }
 
     /**
-     * Get name
+     * Get idTvdb
      *
-     * @return string 
+     * @return integer
      */
-    public function getName()
+    public function getIdTvdb()
     {
-        return $this->name;
+        return $this->idTvdb;
     }
 
     /**
-     * Set overview
+     * Set slug
      *
-     * @param string $overview
+     * @param string $slug
+     *
      * @return Episode
      */
-    public function setOverview($overview)
+    public function setSlug($slug)
     {
-        $this->overview = $overview;
-    
+        $this->slug = $slug;
+
         return $this;
     }
 
     /**
-     * Get overview
+     * Get slug
      *
-     * @return string 
+     * @return string
      */
-    public function getOverview()
+    public function getSlug()
     {
-        return $this->overview;
+        return $this->slug;
     }
 
     /**
-     * Set firstAired
+     * Set title
      *
-     * @param string $firstAired
+     * @param string $title
+     *
      * @return Episode
      */
-    public function setFirstAired($firstAired)
+    public function setTitle($title)
     {
-        $this->firstAired = $firstAired;
-    
+        $this->title = $title;
+
         return $this;
     }
 
     /**
-     * Get firstAired
+     * Get title
      *
-     * @return string 
+     * @return string
      */
-    public function getFirstAired()
+    public function getTitle()
     {
-        return $this->firstAired;
+        return $this->title;
     }
 
     /**
-     * Set lastUpdated
+     * Set summary
      *
-     * @param integer $lastUpdated
+     * @param string $summary
+     *
      * @return Episode
      */
-    public function setLastUpdated($lastUpdated)
+    public function setSummary($summary)
     {
-        $this->lastUpdated = $lastUpdated;
-    
+        $this->summary = $summary;
+
         return $this;
     }
 
     /**
-     * Get lastUpdated
+     * Get summary
      *
-     * @return integer 
+     * @return string
      */
-    public function getLastUpdated()
+    public function getSummary()
     {
-        return $this->lastUpdated;
+        return $this->summary;
+    }
+
+    /**
+     * Set aired
+     *
+     * @param \DateTime $aired
+     *
+     * @return Episode
+     */
+    public function setAired($aired)
+    {
+        $this->aired = $aired;
+
+        return $this;
+    }
+
+    /**
+     * Get aired
+     *
+     * @return \DateTime
+     */
+    public function getAired()
+    {
+        return $this->aired;
+    }
+
+    /**
+     * Set rating
+     *
+     * @param integer $rating
+     *
+     * @return Episode
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    /**
+     * Get rating
+     *
+     * @return integer
+     */
+    public function getRating()
+    {
+        return $this->rating;
     }
 
     /**
      * Set season
      *
-     * @param \Samsung\ServiioAppBundle\Entity\Season $season
+     * @param \AppBundle\Entity\season $season
+     *
      * @return Episode
      */
-    public function setSeason(Season $season = null)
+    public function setSeason(\AppBundle\Entity\season $season = null)
     {
         $this->season = $season;
-    
+
         return $this;
     }
 
     /**
      * Get season
      *
-     * @return \Samsung\ServiioAppBundle\Entity\Season 
+     * @return \AppBundle\Entity\season
      */
     public function getSeason()
     {
         return $this->season;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
-     * Set downloaded
+     * Add image
      *
-     * @param boolean $downloaded
+     * @param \AppBundle\Entity\Image $image
+     *
      * @return Episode
      */
-    public function setDownloaded($downloaded)
+    public function addImage(\AppBundle\Entity\Image $image)
     {
-        $this->downloaded = $downloaded;
+        $this->images[] = $image;
 
         return $this;
     }
 
     /**
-     * Get downloaded
+     * Remove image
      *
-     * @return boolean 
+     * @param \AppBundle\Entity\Image $image
      */
-    public function getDownloaded()
+    public function removeImage(\AppBundle\Entity\Image $image)
     {
-        return $this->downloaded;
+        $this->images->removeElement($image);
     }
 
     /**
-     * Set watched
+     * Get images
      *
-     * @param boolean $watched
-     * @return Episode
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function setWatched($watched)
+    public function getImages()
     {
-        $this->watched = $watched;
-
-        return $this;
-    }
-
-    /**
-     * Get watched
-     *
-     * @return boolean 
-     */
-    public function getWatched()
-    {
-        return $this->watched;
+        return $this->images;
     }
 }

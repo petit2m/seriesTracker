@@ -1,0 +1,48 @@
+  {% extends 'base.html.twig' %} 
+{% block body %}
+
+    <header>
+      <img  class="banner" src="{{render(controller('AppBundle:Serie:image',
+                                                                {'serie' : serie ,'type':'banner','format':'full'}
+                                                                    ))
+                                                            }}" alt="">
+      <div class="info-wrapper">
+       <p> Annee : {{ serie.year }} | Network : {{ serie.network }} |  </p>
+      </div>
+            
+   
+    </header>
+    
+    <div class="container main">
+     <div class="row">
+      <span class="col-lg-8"><p> {{ serie.summary }}</p></span>
+     <div class="col-lg-4 panel panel-default">
+       <div class="panel-body">
+         <p>Statut : {{ serie.status }} <span class="glyphicon glyphicon-ok"></span></p>
+         <p>Statut : {{ serie.status }}</p>
+         <p>Statut : {{ serie.status }}</p>
+       </div>
+     </div>
+   </div>
+      <div>
+       {% for season in seasons %}
+         <div class="col-lg-2">
+           <img class="thumbnail" src="{{render(controller('AppBundle:Index:image',
+                                                               {'entite' : season ,'type':'poster','format':'thumb'}
+                                                                   ))
+                                                           }}" alt="">
+          
+         </div>
+       {% endfor %}
+     </div>
+    </div>  
+      <!-- FOOTER -->
+      <footer>
+        <div class="container">
+           <p class="pull-right"><a href="#">Back to top</a></p>
+           <p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        </div>
+      </footer>
+
+    </div><!-- /.container -->
+{% endblock %}

@@ -10,3 +10,10 @@ services:
     serviceRestTvdb:
         class:      AppBundle\Service\RestTvdb
         arguments:  ["%tvdb_server_rest%","%tvdb_api_key%","%tvdb_login%","%tvdb_password%"]
+    serviceTrackt:
+        class:      AppBundle\Service\Trackt
+        arguments:  ["%trackt_server%","%trackt_client_id%","%trackt_client_secret%","%trackt_access_token%"]
+    servicePushBullet:
+        class:      AppBundle\Service\PushBullet
+        arguments:  ["%pushbullet_server%","%pushbullet_token%"]
+        

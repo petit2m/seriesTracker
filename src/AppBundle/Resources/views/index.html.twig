@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %} 
+{% block body %}
+
+
+
+    <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      
+      <ol class="carousel-indicators">
+    
+      </ol>
+      <div class="carousel-inner" role="listbox">
+    {#% for episode in download %}
+        {% if loop.first %}
+        <div class="item active">
+        {% else %}
+        <div class="item">    
+        {% endif %}         
+          {{ render_esi(controller(
+                  'AppBundle:Serie:randomBanner',
+                 {'id' : episode.serie.idtvdb, 'type':'large'}
+              )) }}
+              
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>{{ episode.name }}</h1>
+              <p><a class="btn btn-lg btn-primary" href="{{ episode.downloadUrl }}" role="button">Download</a></p>
+            </div>
+          </div>
+        </div>
+        {% endfor %#}
+    
+      </div>
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div><!-- /.carousel -->
+    
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container main">
+
+      <!-- Three columns of text below the carousel -->
+      <div class="row miniature">
+        {% for serie in series %}
+            <div class="col-lg-2">
+                <a href="{{ path('serie', {'slug': serie.slug}) }}">
+               <img class="img-thumbnail img-rounded thumbnail" src="{{render(controller('AppBundle:Serie:image',
+                                                                   {'serie' : serie ,'type':'poster','format':'thumb'}
+                                                                       ))
+                                                               }}" alt=""><span class="badge">4</span>  
+            </a>
+            </div>
+        {% endfor %}
+      </div>
+      <!-- FOOTER -->
+      <footer>
+         <div class="container">
+          <p class="pull-right"><a href="#">Back to top</a></p>
+          <p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        </div>
+      </footer>
+
+    </div><!-- /.container -->
+{% endblock %}
