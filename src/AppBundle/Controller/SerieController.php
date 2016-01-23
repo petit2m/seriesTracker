@@ -27,11 +27,9 @@ class SerieController extends Controller
     {
         $em = $this->getDoctrine()->getManager();      
         $serie = $em->getRepository('AppBundle:Serie')->findBySlug($slug);
-      
-        $seasons = $em->getRepository('AppBundle:Season')->findBySerie($serie);
 
         if($serie)
-            return $this->render('AppBundle:Serie:serie.html.twig', array('serie' => $serie[0],'seasons' => $seasons));
+            return $this->render('AppBundle:Serie:serie.html.twig', array('serie' => $serie[0]));
 
         return new Response('Serie not found',404);
     }

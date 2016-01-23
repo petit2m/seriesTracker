@@ -10,5 +10,13 @@ namespace AppBundle\Entity;
  */
 class SeasonRepository extends \Doctrine\ORM\EntityRepository
 {
-  
+    public function findBySlugAndNumber($slug,$number)
+    {
+        return $this->createQueryBuilder('season')
+            ->innerJoin('season.serie','serie')
+            ->where('serie.slug = :slug and season.number= :number')
+            ->setParameters(array('slug' => $slug,'number' => $number)) 
+            ->getQuery()
+            ->getResult();
+    }
 }

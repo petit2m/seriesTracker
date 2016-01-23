@@ -1,0 +1,49 @@
+  {% extends 'base.html.twig' %} 
+{% block body %}
+
+    <header>
+         <div class="col-md-3">
+         <img class="season-poster" src="{{render(controller('AppBundle:Index:image',
+                                                                                                              {'entite' : season ,'type':'poster','format':'thumb'}
+                                                                                                                 ))
+                                                                                                         }}" alt="">
+         </div>
+         <div class="col-md-9">
+          <img  class="clearart-right" src="{{render(controller('AppBundle:Index:image',
+                                                           {'entite' : season.serie ,'type':'clearart','format':'full'}
+                                                               ))
+                                                       }}" alt="">       
+         </div>
+            
+   </header>
+    
+    <div class="container main">
+      <div class="row">
+        <aside class="col-md-3">
+        </aside>
+        
+        <div class="col-md-9 episode-list">  
+        <h1> Saison {{ season.number}} </h1><br>
+        {% for episode in season.episodes %}
+            <div class="col-md-5">
+              <a href="{{ path('episode', {'slug': season.serie.slug, 'seasonNumber': season.number, 'episodeNumber' : episode.number }) }}">{{ episode.number}}. {{ episode.title}}</a>
+            </div>
+          
+          <div class="col-md-1">
+            {% if episode.watchedAt %}<a href="#" ><span class="glyphicon glyphicon-ok-circle text-success"/></a> {% endif %}
+            {% if episode.watchedAt is null %}<a href="#" ><span class="glyphicon glyphicon-eye-open text-danger "/></a>{% endif %}
+            {% if episode.collectedAt is null %}<a href="#" ><span class="glyphicon glyphicon-download"/></a> {% endif %}
+          </div>
+        {% endfor %}
+        </div>
+      </div>  
+      <!-- FOOTER -->
+      <footer>
+        <div class="container">
+           <p class="pull-right"><a href="#">Back to top</a></p>
+           <p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        </div>
+      </footer>
+
+    </div><!-- /.container -->
+{% endblock %}

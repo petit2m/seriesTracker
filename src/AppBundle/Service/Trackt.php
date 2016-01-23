@@ -153,9 +153,9 @@ class Trackt extends GenericService
         return $this->post('sync/history/remove',$options);
     }
     
-    public function getWatchlist()
+    public function getWatchlist($type="shows")
     {
-        return $this->get('sync/watchlist/shows');
+        return $this->get('sync/watchlist/$type');
     }
     
     public function addToWatchlist($value='')

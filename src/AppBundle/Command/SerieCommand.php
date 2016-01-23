@@ -51,11 +51,13 @@ class SerieCommand extends BaseCommand
                 
             $bar->advance();           
             $histo[$serie['show']['ids']['trakt']]=true;
-        
         }
         
         $bar->setMessage('Terminé', 'title');
-        $bar->finish();
+        
+        if($counter <= self::MAX_SERIES)
+            $bar->finish();
+        
         $output->writeln("\n<comment> Fin de la mise à jour</comment>");
        
      

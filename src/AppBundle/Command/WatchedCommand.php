@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
     
-class EpisodeCommand extends BaseCommand
+class WatchedCommand extends BaseCommand
 {
 
     protected $em;
@@ -19,7 +19,7 @@ class EpisodeCommand extends BaseCommand
     protected function configure()
     {
         $this
-           ->setName('sync:episode')
+           ->setName('sync:watched')
            ->setDescription('Enregistre en base les épisodes de trakt');
         //   ->addArgument('name', InputArgument::OPTIONAL, 'Qui voulez vous saluer??')
         //   ->addOption('yell', null, InputOption::VALUE_NONE, 'Si définie, la tâche criera en majuscules');

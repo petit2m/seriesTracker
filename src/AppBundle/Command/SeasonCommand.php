@@ -16,7 +16,7 @@ class SeasonCommand extends BaseCommand
 
     protected $em;
     protected $serviceTrackt;
-    const MAX_SEASONS = 1;
+    const MAX_SEASONS = 10;
     
     protected function configure()
     {
@@ -55,7 +55,9 @@ class SeasonCommand extends BaseCommand
         }
         
         $bar->setMessage('Terminé', 'title');
-        $bar->finish();
+        if($counter <= self::MAX_SEASONS)
+            $bar->finish();
+        
         $output->writeln("\n<comment> Fin de la mise à jour</comment>");
        
      

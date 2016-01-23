@@ -14,3 +14,12 @@ home:
 serie:
     path:  /serie/{slug}
     defaults: { _controller: AppBundle:Serie:view }
+    
+season:
+  path:  /serie/{slug}/season/{number}
+  defaults: { _controller: AppBundle:Season:view }
+    
+episode:
+  path:  /serie/{slug}/season/{seasonNumber}/episode/{episodeNumber}
+  defaults: { _controller: AppBundle:Episode:view }
+  

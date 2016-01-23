@@ -13,7 +13,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $serviceBS = $this->get('serviceTrackt');
-        $series = $serviceBS->search("game");
+        $series = $serviceBS->getCollection('shows');
         var_dump($series);die;
 
         // $serviceBS = $this->get('ServicePushBullet');

@@ -72,7 +72,7 @@ class Season
     private $rating;
     
     /**
-    * @ORM\OneToMany(targetEntity="Episode",mappedBy="episode",cascade={"persist"})
+    * @ORM\OneToMany(targetEntity="Episode",mappedBy="season",cascade={"persist"})
     */
     private $episodes;
     

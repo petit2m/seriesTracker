@@ -2,13 +2,14 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
 * Actor
 *
 * @ORM\Table(name="episode")
-* @ORM\Entity
+* @ORM\Entity(repositoryClass="AppBundle\Entity\EpisodeRepository")
 */
 class Episode
 {
@@ -62,6 +63,20 @@ class Episode
     * @ORM\Column(name="aired", type="datetimetz", nullable=true)
     */
     private $aired;
+        
+    /**
+    * @var datetimetz
+    *
+    * @ORM\Column(name="collected_at", type="datetimetz", nullable=true)
+    */
+    private $collectedAt;
+        
+    /**
+    * @var datetimetz
+    *
+    * @ORM\Column(name="watchted_at", type="datetimetz", nullable=true)
+    */
+    private $watchedAt;
   
     /**
    * @var integer
@@ -73,7 +88,7 @@ class Episode
    /**
    * @var \season
    *
-   * @ORM\ManyToOne(targetEntity="season", inversedBy="episodes")
+   * @ORM\ManyToOne(targetEntity="Season", inversedBy="episodes")
    */
    private $season;
 
@@ -348,5 +363,61 @@ class Episode
     public function getImages()
     {
         return $this->images;
+    }
+
+    /**
+     * Set collectedAt
+     *
+     * @param \DateTime $collectedAt
+     *
+     * @return Episode
+     */
+    public function setCollectedAt($collectedAt)
+    {
+        $this->collectedAt = $collectedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get collectedAt
+     *
+     * @return \DateTime
+     */
+    public function getCollectedAt()
+    {
+        return $this->collectedAt;
+    }
+
+    /**
+     * Set watchedAt
+     *
+     * @param \DateTime $watchedAt
+     *
+     * @return Episode
+     */
+    public function setWatchedAt($watchedAt)
+    {
+        $this->watchedAt = $watchedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get watchedAt
+     *
+     * @return \DateTime
+     */
+    public function getWatchedAt()
+    {
+        return $this->watchedAt;
+    }
+    
+    public function getImagesByTypeAndFormat($type, $format) {
+        $newerCriteria = Criteria::create()
+            ->where(Criteria::expr()->eq('type', $type))
+                ->andWhere(Criteria::expr()->eq('format', $format));               
+
+        return $this->getImages()->matching($newerCriteria);
     }
 }

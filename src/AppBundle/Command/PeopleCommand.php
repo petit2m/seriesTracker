@@ -54,7 +54,9 @@ class PeopleCommand extends BaseCommand
         }     
         
         $bar->setMessage('Terminé', 'title');
-        $bar->finish();
+        if($counter <= self::MAX_CHARACTER)
+            $bar->finish();
+        
         $output->writeln("\n<comment> Fin de la mise à jour</comment>");     
     }
     /**

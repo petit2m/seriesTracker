@@ -7,15 +7,40 @@ body {
   color: #5a5a5a;
 }
 
-.thumbnail{
-  height:242.5px;    
+.season{
+  height:250px;    
 }
+
+.actor{
+  height:150px;  
+  margin-bottom:0px;  
+}
+
 #banner-serie{
 /*   position:relative;*/
 }
 
 .banner{
    width:100%;
+}
+
+.logo{
+  height: 250px;
+}
+
+.clearart-right{
+  float:right;
+}
+
+.screenshot{
+  width: 500px;
+}
+
+.season-poster{
+  position: absolute;
+  position:fixed;
+  top:130px;
+  z-index:1;
 }
 
 .info-wrapper{
@@ -40,6 +65,10 @@ header{
  height: 150px;
 /* border: 1px solid #ddd;*/
 
+}
+
+.episode-list h1{
+  text-align:center;
 }
 
 /* CUSTOMIZE THE NAVBAR
