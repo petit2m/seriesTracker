@@ -20,24 +20,24 @@ parameters:
     
     # TVDB 
     tvdb_server: 'http://thetvdb.com/api/'
-    tvdb_login: petit2mange
-    tvdb_password: ronico
-    tvdb_api_key: 143C6D4F34FE926E
+    tvdb_login: 
+    tvdb_password: 
+    tvdb_api_key: 
     tvdb_server_rest: 'https://api-dev.thetvdb.com'
     
     # BetaSeries
     bs_server: 'https://api.betaseries.com/'
-    bs_api_key: eee22c4bdf48
-    bs_user: lte
-    bs_md5_password: 8f3241d896ce21ad783d4a89f9632366
+    bs_api_key: 
+    bs_user: 
+    bs_md5_password: 
     
     # Trackt
-    trackt_client_id: 21962fa1fa3eedd89d2cfd79de86acb12fa9ad2a62024f63b233bfec99ae54e6
-    trackt_client_secret: 79037d9c84d0857857494d3cab5e987bbe4cf6132e35334dd3ab75d88ccc4ef9
-    trackt_refresh_token: e5410fca4fcf73ef51fc738e32c9c5238321b40fa2a274c4861aad93a0fc7a26
-    trackt_access_token: 326635a2520faf64db204fd693849ec08f77fe847f2bc26810c8f5631a0e358d
+    trackt_client_id: 
+    trackt_client_secret: 
+    trackt_refresh_token: 
+    trackt_access_token: 
     trackt_server: https://api-v2launch.trakt.tv    
     
     # PushBullet
     pushbullet_server: https://api.pushbullet.com/v2
-    pushbullet_token: Qi4oHpjFOAwpAHFVKb31k29yLHLqHC9q
+    pushbullet_token: 

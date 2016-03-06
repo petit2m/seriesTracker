@@ -1,45 +1,37 @@
     <div class="navbar-wrapper">
       <div class="container">
-
-        <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-        
-            <div class="navbar-header">
-        
+        <nav class="navbar navbar-dark bg-inverse" role="navigation">
               <a class="navbar-brand" href="{{path('home')}}">Series TV</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
+
               <ul class="nav navbar-nav">
-                <!--li {% if 'serie' in app.request.attributes.get('_route') %}class="active" {% endif %}>
-                        <a href="{#{ path('serie') }#}">A télécharger</a>
-                </li-->
-                <li> 
-                  <a href="#"></a>
-                </li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Series <span                           class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Archives</a></li>
-                    <li><a href="#">En attente</a></li>
-                  
-                  </ul>
-                </li>
-                <li>
-                        <a href="#">Calendrier</a>
-                </li>
-                <li>
-                        <a href="#">Dashboard</a>
-                </li>
-                </li>
-              </ul>
-              <form class="nav navbar-nav navbar-form nav-right" role="search">
-                  <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Search">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Calendrier</a>
+                  <div class="dropdown-menu" aria-labelledby="Preview">
+                    <a class="dropdown-item" href="#">Mes séries</a>
+                    <a class="dropdown-item" href="#">Nouveautés</a>
                   </div>
-                  <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Series</a>
+                  <div class="dropdown-menu" aria-labelledby="Preview">
+                    <a class="dropdown-item" href="#">Watchlist</a>
+                    <a class="dropdown-item" href="#">En attente</a>
+                    <a class="dropdown-item" href="#">Archives</a>
+                    <a class="dropdown-item" href="#">...</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link" href="{{path('calendar',{'route':'new'})}}">Calendrier</a>
+                </li>
+                <li  class="nav-item">
+                        <a class="nav-link" href="#">Dashboard</a>
+                </li>                
+
+              </ul>
+              <form class="form-inline pull-xs-right" role="search">
+                  <input class="form-control" type="text" placeholder="Search">
+                  <button type="submit" class="btn btn-default"><span class="fa fa-search"></span></button>
               </form>
-             
-            </div>
-        
         </nav>
 
       </div>
