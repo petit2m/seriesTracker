@@ -1,23 +1,47 @@
-/* GLOBAL STYLES
--------------------------------------------------- */
-/* Padding below the footer and lighter body text */
 
 body {
   padding-bottom: 40px;
   color: #5a5a5a;
 }
 
+.badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #777;
+    border-radius: 10px;
+}
+
+
+/* SEASON */
+
 .season{
   height:250px;    
 }
 
+.season-poster{
+  position: absolute;
+  position:fixed;
+  top:130px;
+  z-index:1;
+}
+
+/* ACTOR */
 .actor{
-  height:150px;  
+  height:130px;  
   margin-bottom:0px;  
 }
 
-#banner-serie{
-/*   position:relative;*/
+.actor-medium{
+  height:450px;  
+  margin-bottom:0px;  
 }
 
 .banner{
@@ -32,17 +56,14 @@ body {
   float:right;
 }
 
+/* EPISODE */
+
 .screenshot{
   width: 500px;
 }
 
-.season-poster{
-  position: absolute;
-  position:fixed;
-  top:130px;
-  z-index:1;
-}
 
+/* Header */
 .info-wrapper{
 position: absolute;
 width: 100%;
@@ -71,6 +92,16 @@ header{
   text-align:center;
 }
 
+/* CALENDAR */
+.calendar-tools h3{
+  text-align:center;
+}
+
+.calendar-tools .btn-group{
+  padding:10px;
+}
+
+
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */
 
@@ -95,17 +126,11 @@ header{
   left: 0;
   z-index: 20;
   opacity: 0.75;
+  
 }
 
 /* Flip around the padding for proper display in narrow viewports */
-.navbar-wrapper > .container {
-  padding-right: 0;
-  padding-left: 0;
-}
-.navbar-wrapper .navbar {
-  padding-right: 15px;
-  padding-left: 15px;
-}
+
 .navbar-wrapper .navbar .container {
   width: auto;
 }
@@ -140,46 +165,9 @@ header{
 }
 
 
-/* MARKETING CONTENT
--------------------------------------------------- */
 
-/* Center align the text within the three columns below the carousel */
-.main .miniature {
-  margin-bottom: 20px;
-  text-align: center;
-  
-}
-.main h2 {
-  font-weight: normal;
-}
-.main .miniature p {
-  margin-right: 10px;
-  margin-left: 10px;
-}
 
-.main{
-  padding-top : 20px;
-}
-
-.main .miniature .col-lg-4{
-    height : 215px;
-}
-
-/* Featurettes
-------------------------- */
-
-.featurette-divider {
-  margin: 80px 0; /* Space out the Bootstrap <hr> more */
-}
-
-/* Thin out the marketing headings */
-.featurette-heading {
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -1px;
-}
-
-/* PORTRAIT 
+/* ACTOR 
 ---------------------------------*/
 .portrait{
     height:180px;
@@ -231,10 +219,6 @@ header{
   .navbar-wrapper .container {
     padding-right: 15px;
     padding-left: 15px;
-  }
-  .navbar-wrapper .navbar {
-    padding-right: 0;
-    padding-left: 0;
   }
 
   /* The navbar becomes detached from the top, so we round the corners */
