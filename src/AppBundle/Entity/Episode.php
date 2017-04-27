@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 * @ORM\Table(name="episode")
 * @ORM\Entity(repositoryClass="AppBundle\Entity\EpisodeRepository")
 */
-class Episode
+class Episode extends IllustratedItem
 {
     /**
     * @var integer
@@ -41,7 +40,14 @@ class Episode
     *
     * @ORM\Column(name="id_tvdb", type="integer", nullable=true)
     */
-    private $idTvdb;
+    private $idTvdb; 
+    
+     /**
+    * @var integer
+    *
+    * @ORM\Column(name="id_tmdb", type="integer", nullable=true)
+    */
+    private $idTmdb;
      
     /**
     * @var string
@@ -413,11 +419,4 @@ class Episode
         return $this->watchedAt;
     }
     
-    public function getImagesByTypeAndFormat($type, $format) {
-        $newerCriteria = Criteria::create()
-            ->where(Criteria::expr()->eq('type', $type))
-                ->andWhere(Criteria::expr()->eq('format', $format));               
-
-        return $this->getImages()->matching($newerCriteria);
-    }
 }

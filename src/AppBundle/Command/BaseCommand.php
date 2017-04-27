@@ -64,7 +64,7 @@ class BaseCommand extends ContainerAwareCommand
                 $image->setType($type)
                     ->setFormat($format)
                     ->setUrl($url);
-                $this->persistAndSave($image);                
+                $this->em->persist($image);                
                 $entite->addImage($image);
             }
         }

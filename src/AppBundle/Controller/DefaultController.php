@@ -12,9 +12,20 @@ class DefaultController extends Controller
   
     public function indexAction(Request $request)
     {
-        $serviceBS = $this->get('serviceTrackt');
-        $series = $serviceBS->getCollection('shows');
-        var_dump($series);die;
+        // $serviceBS = $this->get('serviceTrackt');
+      //   $series = $serviceBS->getCollection('shows');
+      //   var_dump($series);die;
+      //               //
+         $serviceBS = $this->get('serviceTmdb');
+         $series = $serviceBS->getSerieImages(62852);
+         $series = $serviceBS->getConfiguration();
+         var_dump($series);die;
+
+//        $serviceBS = $this->get('serviceRestTvdb');
+    //    $series = $serviceBS->getSerieImageParams(279536);
+  //      $series = $serviceBS->getSerieImagesSummary(279536);
+//        $series = $serviceBS->getSerieImages(279536,'series');
+//        var_dump($series);die;
 
         // $serviceBS = $this->get('ServicePushBullet');
         // $push = $serviceBS->getPushes();

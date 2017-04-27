@@ -58,7 +58,7 @@ class GenericService
     {
         if($response->getStatusCode() != 200){
             $res = $response->json();
-            var_dump($response->getStatusCode());
+         //   var_dump($response->getStatusCode());
             if(isset($res['Error']))  
                 $this->log($response->getStatusCode(),$res['Error']);
             

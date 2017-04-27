@@ -6,12 +6,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Serie;
+use AppBundle\Entity\IllustratedItem;
 
 class IndexController extends Controller
 {
   
   // image controller ?
-  public function imageAction($entite, $type, $format)
+  public function imageAction(IllustratedItem $entite, $type, $format)
   {
       $image = $entite->getImagesByTypeAndFormat($type, $format);
       
@@ -28,7 +29,6 @@ class IndexController extends Controller
     {   
         $em = $this->getDoctrine()->getManager();      
         $series = $em->getRepository('AppBundle:Serie')->findAll();
-       
         return $this->render('AppBundle::index.html.twig', array('series' => $series));
     }
     

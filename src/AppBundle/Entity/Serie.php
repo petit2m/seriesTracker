@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\Criteria;
 * @ORM\Table(name="serie")
 * @ORM\Entity(repositoryClass="AppBundle\Entity\SerieRepository")
 */
-class Serie
+class Serie Extends IllustratedItem
 {
     /**
     * @var integer
@@ -28,6 +28,13 @@ class Serie
     * @ORM\Column(name="id_tvdb", type="integer", nullable=true)
     */
     private $idTvdb;
+    
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="id_tmdb", type="integer", nullable=true)
+    */
+    private $idTmdb;
 
     /**
     * @var integer
@@ -67,7 +74,7 @@ class Serie
     /**
     * @var string
     *
-    * @ORM\Column(name="network", type="string", length=20, nullable=true)
+    * @ORM\Column(name="network", type="string", length=50, nullable=true)
     */
     private $network;
     
@@ -168,6 +175,30 @@ class Serie
     public function getIdTvdb()
     {
         return $this->idTvdb;
+    }
+    
+    /**
+    * Set idTmdb
+    *
+    * @param integer $idTmdb
+    *
+    * @return Serie
+    */
+    public function setIdTmdb($idTmdb)
+    {
+        $this->idTmdb = $idTmdb;
+
+        return $this;
+    }
+
+    /**
+    * Get idTmdb
+    *
+    * @return integer
+    */
+    public function getIdTmdb()
+    {
+        return $this->idTmdb;
     }
 
     /**
@@ -499,14 +530,6 @@ class Serie
         return $this->images;
     }
     
-    public function getImagesByTypeAndFormat($type, $format) {
-        $newerCriteria = Criteria::create()
-            ->where(Criteria::expr()->eq('type', $type))
-                ->andWhere(Criteria::expr()->eq('format', $format));               
-
-        return $this->getImages()->matching($newerCriteria);
-    }
-
     /**
      * Set airDay
      *

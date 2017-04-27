@@ -16,7 +16,7 @@ class SeasonCommand extends BaseCommand
 
     protected $em;
     protected $serviceTrackt;
-    const MAX_SEASONS = 10;
+    const MAX_SEASONS = 50;
     
     protected function configure()
     {
@@ -53,7 +53,7 @@ class SeasonCommand extends BaseCommand
             
             $bar->advance();        
         }
-        
+        $this->em->flush();
         $bar->setMessage('Terminé', 'title');
         if($counter <= self::MAX_SEASONS)
             $bar->finish();
@@ -80,7 +80,7 @@ class SeasonCommand extends BaseCommand
             $serie->addSeason($season);
             $this->em->persist($serie);
             $this->em->persist($season);  
-            $this->em->flush();
+           
             
             return true;
         }

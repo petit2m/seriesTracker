@@ -9,7 +9,10 @@ services:
         arguments:  ["%bs_server%","%bs_api_key%","%bs_user%","%bs_md5_password%"]
     serviceRestTvdb:
         class:      AppBundle\Service\RestTvdb
-        arguments:  ["%tvdb_server_rest%","%tvdb_api_key%","%tvdb_login%","%tvdb_password%"]
+        arguments:  ["%tvdb_server_rest%","%tvdb_api_key%","%tvdb_user_name%","%tvdb_user_key%"]
+    serviceTmdb:
+        class:      AppBundle\Service\Tmdb
+        arguments:  ["%tmdb_server_rest%","%tmdb_api_key%",]    
     serviceTrackt:
         class:      AppBundle\Service\Trackt
         arguments:  ["%trackt_server%","%trackt_client_id%","%trackt_client_secret%","%trackt_access_token%"]

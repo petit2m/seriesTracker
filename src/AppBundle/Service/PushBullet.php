@@ -24,5 +24,16 @@ class PushBullet extends GenericService
         return $this->get('pushes?active='.$active.'modified_after='.$modifiedAfter);
     }
     
+    public function sendPush($value='')
+    {
+        $options['body'] = json_encode(
+                                array('body'    => 'test',
+                                      'type'    => 'note',
+                                      'title'   => 'test'
+                                )
+                           );
+                           
+        return $this->post('pushes',$options);
+    }
     
 } 

@@ -15,15 +15,14 @@ class SerieCommand extends BaseCommand
 
     protected $em;
     protected $serviceTrackt;
-    const MAX_SERIES = 1;
+    const MAX_SERIES = 50;
     
     protected function configure()
     {
         $this
            ->setName('sync:serie')
-           ->setDescription('Enregistre en base les series présentes sur trakt');
-        //   ->addArgument('name', InputArgument::OPTIONAL, 'Qui voulez vous saluer??')
-        //   ->addOption('yell', null, InputOption::VALUE_NONE, 'Si définie, la tâche criera en majuscules');
+           ->setDescription('Enregistre en base les series présentes sur trakt')
+           ->addArgument('max', InputArgument::OPTIONAL, 'Nombre maximum d\'item à traiter');
     }
     
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -34,28 +33,30 @@ class SerieCommand extends BaseCommand
     
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $maxSeries = (null !== $input->getArgument('max')) ? $input->getArgument('max') : static::MAX_SERIES;
         $output->writeln("<comment> Démarrage de la mise à jour des séries </comment>");
         $collection = $this->serviceTrackt->getMySeries();
         $nbFound = count($collection);
         $output->writeln("<info> ".$nbFound." series trouvées</info>\n\n\n\n");
         $bar = $this->getProgressBar($nbFound, 'Mise à jour en cours');
-        $counter = 0;
+        $counter = 1;
         foreach ($collection as $serie) {
+          // dump($serie['show']['ids']['trakt']);
             if(isset($histo[$serie['show']['ids']['trakt']]))
                 continue;
             
-            if($this->refreshSerie($serie['show']['ids']['trakt'])){
-                if(++$counter > self::MAX_SERIES)
-                    break;
-            }
+            if($this->refreshSerie($serie['show']['ids']['trakt']) && ++$counter >= $maxSeries)
+                      break;
                 
             $bar->advance();           
             $histo[$serie['show']['ids']['trakt']]=true;
         }
         
+        $this->em->flush();
+        
         $bar->setMessage('Terminé', 'title');
         
-        if($counter <= self::MAX_SERIES)
+        if($counter <= $maxSeries)
             $bar->finish();
         
         $output->writeln("\n<comment> Fin de la mise à jour</comment>");
@@ -76,6 +77,7 @@ class SerieCommand extends BaseCommand
        
         if(!$serie){
             $info = $this->serviceTrackt->getTranslatedInfos($id); 
+     //       dump($info);
             $this->addSerie($info);
             
             return true;
@@ -89,6 +91,7 @@ class SerieCommand extends BaseCommand
         $serie = new Serie();
         $serie->setIdTrakt($info['ids']['trakt'])
               ->setIdTvdb($info['ids']['tvdb'])
+              ->setIdTmdb($info['ids']['tmdb'])
               ->setSlug($info['ids']['slug'])
               ->setTitle($info['title'])
               ->setYear($info['year'])
@@ -102,8 +105,8 @@ class SerieCommand extends BaseCommand
               ->setStatus($info['status'])
               ->setRating($info['rating']); 
         
-        $this->insertImage($serie,$info['images']);
-        $this->persistAndSave($serie);
+      //  $this->insertImage($serie,$info['images']);
+        $this->em->persist($serie);
     }
     
   

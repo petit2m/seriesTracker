@@ -44,15 +44,14 @@ class WatchedCommand extends BaseCommand
             $episodes = $this->serviceTrackt->getEpisodes($season->getSerie()->getSlug(),$season->getNumber(),'full,images');
 
             foreach($episodes as $episode){
-                if($this->checkEpisode($season,$episode)){
-                    if(++$counter > self::MAX_EPISODES)
+                if($this->checkEpisode($season,$episode) && ++$counter > self::MAX_EPISODES)
                         break 2;
-                }
             }
             
             $bar->advance();        
         }
         
+        $this->em->flush();
         $bar->setMessage('Terminé', 'title');
 
         if($counter <= self::MAX_EPISODES)
@@ -80,8 +79,7 @@ class WatchedCommand extends BaseCommand
             $season->addEpisode($episode);
             $this->em->persist($season);
             $this->em->persist($episode);  
-            $this->em->flush();
-            
+                       
             return true;
         }
         return false;

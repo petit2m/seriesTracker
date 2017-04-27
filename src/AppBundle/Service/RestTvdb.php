@@ -10,17 +10,17 @@ use GuzzleHttp\Message\Response;
 class RestTvdb
 {
     
-    function __construct($server, $api_key, $login, $password, $language='en')
+    function __construct($server, $apiKey, $userName, $userKey, $language='en')
     {
         $this->language = $language;
-        $this->apiKey   = $api_key;
-        $this->login    = $login;
-        $this->password = $password;
+        $this->apiKey   = $apiKey;
+        $this->userName = $userName;
+        $this->userKey = $userKey;
         $this->language = $language;
         $this->client   = new Client( array('base_url' => $server, 'defaults'=>array('exceptions' => false) ) );
         $this->options  = array('headers' => array('Content-Type' => 'application/json',
                                                    'Accept-Language' => $language,
-                                                   'Accept' => 'application/vnd.thetvdb.v1.2.0'));
+                                                   'Accept' => 'application/vnd.thetvdb.v2.1.2'));
         $this->login();                                    
     }
     
@@ -28,8 +28,8 @@ class RestTvdb
     {
         $options['body'] = json_encode(
                                 array("apikey"   => $this->apiKey,
-                                      "username" => $this->login,
-                                      "userpass" => $this->password
+                                      "username" => $this->userName,
+                                      "userkey" => $this->userKey
                                 )
                            );
                                                

@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 * @ORM\Table(name="season")
 * @ORM\Entity(repositoryClass="AppBundle\Entity\SeasonRepository")
 */
-class Season
+class Season Extends IllustratedItem
 {
     /**
     * @var integer
@@ -49,6 +49,13 @@ class Season
     * @ORM\Column(name="id_tvdb", type="integer", nullable=true)
     */
     private $idTvdb;
+
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="id_tmdb", type="integer", nullable=true)
+    */
+    private $idTmdb;
 
     /**
     * @var integer
@@ -200,6 +207,30 @@ class Season
     public function getIdTvdb()
     {
         return $this->idTvdb;
+    }
+
+    /**
+    * Set idTmdb
+    *
+    * @param integer $idTvdb
+    *
+    * @return Season
+    */
+    public function setIdTmdb($idTmdb)
+    {
+        $this->idTmdb = $idTmdb;
+
+        return $this;
+    }
+
+    /**
+    * Get idTmdb
+    *
+    * @return integer
+    */
+    public function getIdTmdb()
+    {
+        return $this->idTmdb;
     }
 
     /**
@@ -355,14 +386,7 @@ class Season
     {
         return $this->airedEpisodes;
     }
-    
-    public function getImagesByTypeAndFormat($type, $format) {
-        $newerCriteria = Criteria::create()
-            ->where(Criteria::expr()->eq('type', $type))
-                ->andWhere(Criteria::expr()->eq('format', $format));               
-
-        return $this->getImages()->matching($newerCriteria);
-    }
+ 
 
     /**
      * Add episode
