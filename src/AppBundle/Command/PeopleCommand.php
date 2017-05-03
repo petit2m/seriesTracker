@@ -92,6 +92,7 @@ class PeopleCommand extends BaseCommand
             $actor = new Actor();
             $actor->setName($info['person']['name'])
                 ->setIdTrakt($info['person']['ids']['trakt'])
+                ->setIdTmdb($info['person']['ids']['tmdb'])
                 ->setSlug($info['person']['ids']['slug'])
                 ->setBirthday(new \DateTime($info['person']['birthday']))
                 ->setBirthplace($info['person']['birthplace'])
@@ -101,7 +102,7 @@ class PeopleCommand extends BaseCommand
             if($info['person']['death'])
                  $actor->setDeath(new \DateTime($info['person']['death']));
             
-            $this->insertImage($actor,$info['person']['images']);
+        //    $this->insertImage($actor,$info['person']['images']);
             $this->em->persist($actor);
         }else{
             $actor = $actor[0];

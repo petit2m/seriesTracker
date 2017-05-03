@@ -7,9 +7,10 @@ use GuzzleHttp\Message\Response;
 /**
 * Service class for new tvdb rest service
 */
-class RestTvdb
+class RestTvdb extends GenericService
 {
-    
+    CONST IMAGE_URL = 'thetvdb.com/banners/_cache/'; 
+        
     function __construct($server, $apiKey, $userName, $userKey, $language='en')
     {
         $this->language = $language;
@@ -45,6 +46,13 @@ class RestTvdb
     // EPISODES FUNCTIONS //
     ////////////////////////
     
+    /**
+     * Retourne un episode
+     *
+     * @param string $id 
+     * @return void
+     * @author Nicolas
+     */
     public function getEpisodeById($id)  
     {   
        return $this->get('/episodes/'.$id);
@@ -63,7 +71,18 @@ class RestTvdb
         return $this->get('/series/'.$serieid.'/episodes?page='.$page);
     }
     
-
+    /**
+     * Cherche un épisode
+     *
+     * @param string $serieid 
+     * @param string $page 
+     * @param string $absoluteNumber 
+     * @param string $airedSeason 
+     * @param string $airedEpisode 
+     * @param string $imdbId 
+     * @return void
+     * @author Nicolas
+     */
     public function searchEpisodes($serieid, $page = 1,  $absoluteNumber = false, $airedSeason = false, $airedEpisode = false, $imdbId = false)
     {
         $query = '/series/'.$serieid.'/episodes/query?page='.$page;
@@ -76,6 +95,13 @@ class RestTvdb
         return $this->get($query);
     }
   
+    /**
+     * undocumented function
+     *
+     * @param string $serieId 
+     * @return void
+     * @author Nicolas
+     */
     public function getSearchEpisodeParams($serieId)
     {
         return $this->get('/series/'.$serieId.'/episodes/query/params');
@@ -86,6 +112,15 @@ class RestTvdb
     // SERIES FUNCTIONS //
     //////////////////////
     
+    /**
+     * undocumented function
+     *
+     * @param string $name 
+     * @param string $imdbId 
+     * @param string $zap2itId 
+     * @return void
+     * @author Nicolas
+     */
     public function searchSerie($name = '', $imdbId = 0, $zap2itId = 0)
     {
         $query = '/search/series?';
@@ -97,6 +132,13 @@ class RestTvdb
         return $this->get($query);
     }
     
+    /**
+     * undocumented function
+     *
+     * @param string $serieId 
+     * @return void
+     * @author Nicolas
+     */
     public function getSerieSearchParam($serieId)
     {
         return $this->get('/search/series/params');
@@ -155,12 +197,12 @@ class RestTvdb
         return $this->get('/series/'.$serieId.'/images');
     }
     
-    public function getSerieImages($serieId, $type = 'banner', $resolution = '', $params = array())
+    public function getSerieImages($serieId, $type = 'series', $subKey = null)
     {   
         $query = '/series/'.$serieId.'/images/query?keyType='.$type;
         
-        if($resolution)     $query .= '&resolution='.$resolution;
-        if(!empty($params)) $query .= '&subKey='.implode(',',$params);
+        // if($resolution)     $query .= '&resolution='.$resolution;
+        if($subKey) $query .= '&subKey='.$subKey;
             
         return $this->get($query);
     }
@@ -170,57 +212,30 @@ class RestTvdb
         return $this->get('/series/'.$serieId.'/images/query/params');
     }
     
-    private function post($uri, $options)
+    protected function getImagesUrl()
     {
-        $response = $this->client->post($uri, array_merge($this->options,$options));   
-        $res = $this->checkResponse($response);      
-        
-        return $res;
+        return static::IMAGE_URL;
     }
     
-    private function get($uri)
+ public function getImages($serieId)
     {
-        $response = $this->client->get($uri, $this->options);
-        $res = $this->checkResponse($response);      
-                
-        return $res;
-    }
-    
-    private function head($uri, $param = false)
-    {
-        $response = $this->client->head($uri, $this->options);
+        $tabImages = $this->getSerieImages($serieId);
 
-        if($response->getStatusCode() != 200){
-            $res = $response->getHeaders();
-            if(isset($res['Error']))  
-                $this->log($response->getStatusCode(),$res['Error']);
-            
-            return false;
+        if(empty($tabImages)) {
+            return array();
         }
         
-        if($param)
-            return $response->getHeader($param);
-        else
-            return $response->getHeaders();
-    }
-        
-    private function checkResponse(Response $response)
-    {
-        if($response->getStatusCode() != 200){
-            $res = $response->json();
-            if(isset($res['Error']))  
-                $this->log($response->getStatusCode(),$res['Error']);
-            
-            return false;
+        foreach($tabImages['data'] as $key => $image) {
+                $note[$key] = $image['ratingsInfo']['average'];
         }
-        
-        return $response->json();
-    }
-    
-    //TODO : integrer un vrai logger ? monolog ? pour stocker les données en bdd
-    private function log($error_id, $message)
-    {  
-        throw new \Exception($message); //on lève une exception en attendant mieux... pas très utile de désactiver les exceptions pour en relever derrière néanmoins
+        $sortedImage = array_multisort($note, SORT_DESC,SORT_NUMERIC, $tabImages['data']);
+            
+        $return[] = array('format'=>'full',
+                          'url' => $this->getImagesUrl().$tabImages['data'][0]['fileName'],
+                          'type' => 'banner'
+                      );                
+
+        return $return;
     }
     
 }

@@ -56,17 +56,5 @@ class BaseCommand extends ContainerAwareCommand
         $em->flush();
     }
     
-    protected function insertImage($entite, $images)
-    {
-        foreach ($images as $type => $image) {
-            foreach ($image as $format => $url) {
-                $image = new Image();
-                $image->setType($type)
-                    ->setFormat($format)
-                    ->setUrl($url);
-                $this->em->persist($image);                
-                $entite->addImage($image);
-            }
-        }
-    }   
+
 }

@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\Criteria;
 * @ORM\Table(name="actor")
 * @ORM\Entity
 */
-class Actor
+class Actor extends IllustratedItem
 {
     /**
     * @var integer
@@ -28,6 +28,13 @@ class Actor
     * @ORM\Column(name="id_trakt", type="integer", nullable=false)
     */
     private $idTrakt;
+    
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="id_tmdb", type="integer", nullable=true)
+    */
+    private $idTmdb;
  
     /**
     * @var string
@@ -76,22 +83,6 @@ class Actor
     */
     private $images;
     
-  
-    public function getImagesByTypeAndFormat($type, $format) {
-        $newerCriteria = Criteria::create()
-            ->where(Criteria::expr()->eq('type', $type))
-                ->andWhere(Criteria::expr()->eq('format', $format));               
-
-        return $this->getImages()->matching($newerCriteria);
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
     /**
      * Get id
      *
@@ -281,30 +272,6 @@ class Actor
     }
 
     /**
-     * Set nale
-     *
-     * @param string $nale
-     *
-     * @return Actor
-     */
-    public function setNale($nale)
-    {
-        $this->nale = $nale;
-
-        return $this;
-    }
-
-    /**
-     * Get nale
-     *
-     * @return string
-     */
-    public function getNale()
-    {
-        return $this->nale;
-    }
-
-    /**
      * Set name
      *
      * @param string $name
@@ -326,5 +293,27 @@ class Actor
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * Set id Tmdb
+     *
+     * @author Nicolas
+     */
+    public function setIdTmdb ($idTmdb)
+    {
+        $this->idTmdb = $idTmdb;
+        
+        return $this;
+    }
+    
+    /**
+     * Get id Tmdb
+     *
+     * @author Nicolas
+     */
+    public function getIdTmdb ()
+    {
+        return $this->idTmdb;
     }
 }

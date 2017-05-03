@@ -47,6 +47,26 @@ class GenericService
         return $res;
     }
     
+    
+    
+    private function head($uri, $param = false)
+    {
+        $response = $this->client->head($uri, $this->options);
+
+        if($response->getStatusCode() != 200){
+            $res = $response->getHeaders();
+            if(isset($res['Error']))  
+                $this->log($response->getStatusCode(),$res['Error']);
+            
+            return false;
+        }
+        
+        if($param)
+            return $response->getHeader($param);
+        else
+            return $response->getHeaders();
+    }
+    
     /**
      * Check the return of a request response
      *
@@ -58,9 +78,10 @@ class GenericService
     {
         if($response->getStatusCode() != 200){
             $res = $response->json();
-         //   var_dump($response->getStatusCode());
+         
             if(isset($res['Error']))  
-                $this->log($response->getStatusCode(),$res['Error']);
+            var_dump($res['Error']);
+         //       $this->log($response->getStatusCode(),$res['Error']);
             
             return false;
         }

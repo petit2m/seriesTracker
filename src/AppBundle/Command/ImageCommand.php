@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
     
 class ImageCommand extends BaseCommand
 {
-
     protected $em;
     protected $serviceTvdb;
     protected $serviceTmdb;
@@ -23,16 +22,15 @@ class ImageCommand extends BaseCommand
         $this
            ->setName('sync:images')
            ->setDescription('Enregistre en base les images provenant des diverses sources de media')
-           ->addArgument('mediaType', InputArgument::REQUIRED, 'Le type de media à mettre à jour : Serie|Season|Episode')
+           ->addArgument('mediaType', InputArgument::REQUIRED, 'Le type de media à mettre à jour : Serie|Season|Episode|Actor')
            ->addArgument('slug', InputArgument::OPTIONAL, 'Le slug du media à mettre à jour ');
     }
     
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
        $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-       $this->serviceTvdb = $this->getContainer()->get('serviceRestTvdb');
+       $this->serviceFanart = $this->getContainer()->get('serviceFanart');
        $this->serviceTmdb = $this->getContainer()->get('serviceTmdb');
-       $this->tmdbConf = $this->serviceTmdb->getConfiguration(); // A ne récupérer qu'une fois
     }
     
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -40,21 +38,19 @@ class ImageCommand extends BaseCommand
         $output->writeln("<comment> Démarrage de la mise à jour des images </comment>");
         
         $mediaType = $input->getArgument('mediaType');
-        if(!in_array($mediaType, array('Serie','Season','Episode'))){
-            $output->writeln("<error> 'Unknown media type !' </error>");;
+        if (!in_array($mediaType, array('Serie','Season','Episode','Actor'))) {
+            $output->writeln("<error> 'Unknown media type !' </error>");
             exit();
         }
             
         $slug = $input->getArgument('slug');
-        if(null !== $slug){
-
+        if (null !== $slug) {
             $item = $this->em->getRepository("AppBundle:$mediaType")->findOneBySlug($slug);
-            if(!$item){
-                $output->writeln("<info>Impossible de trouver $slug</info>\n\n\n\n");
+            if (!$item) {
+                $output->writeln("<error>Impossible de trouver $slug</error>\n\n\n\n");
                 exit();
             }
-
-            $this->update($item->getId(),$mediaType);
+            $this->update($item, $mediaType);            
         }else{
             $collection = $this->em->getRepository("AppBundle:$mediaType")->findAll();    
             $nbFound = count($collection);
@@ -62,14 +58,12 @@ class ImageCommand extends BaseCommand
             $bar = $this->getProgressBar($nbFound, 'Mise à jour en cours');        
             foreach($collection as $item){
                   $bar->advance();    
-                  $this->update($item,$mediaType);
+                  $this->update($item, $mediaType);
             }
             $bar->setMessage('Terminé', 'title');
             $bar->finish();
             $output->writeln("\n<comment> Fin de la mise à jour</comment>");
         }
-       
-                
     }
     /**
      * Ajoute la série en bdd si elle n'existe pas, on 
@@ -79,26 +73,47 @@ class ImageCommand extends BaseCommand
      * @return void
      * @author Niko
      */
-    private function update($id,$mediaType)
+    private function update($item,$mediaType)
     {
-        $item = $this->em->getRepository("AppBundle:$mediaType")->findBy($id);
-        //$this->insertImage($item,$info['images']);
+        $images = $this->getImages($item,$mediaType);
+        if(empty($images)) {
+            return;
+        }
+        $object = $this->em->getRepository("AppBundle:$mediaType")->findOneById($item->getId());
+        $this->insertImage($object,$images);
     }    
       
-    protected function getImage($item)
+    protected function getImages($item, $mediaType)
     {
-        # code...
-    }        
-    /*
-Poster & Fanart
-The highest rated poster and fanart are imported from TMDB. 1080p (or larger) is preferred for fanart and we fall back to 720p if nothing better is available. If no image exists on TMDB, we import from TVDB with the same 1080p preference.
-Season Posters
-The highest rated season posters are imported from TMDB. If no season poster exists, we import from TVDB.
-Episode Screenshots
-The highest rated episode screenshots are imported from TMDB since they support 1080p (and higher) resolutions. If no screenshot exists on TMDB, we import from TVDB.
-Additional Images
-Supporting TV show images such as logo, banner, and thumb are imported from Fanart.tv. If the no banner exists, we import from TVDB.
-    */
+        switch($mediaType){
+            case 'Serie':
+                $tmdbImages = $this->serviceTmdb->getImages($item->getIdTmdb());
+                $tvdbImages = $this->serviceFanart->getImages($item->getIdTvdb());
+                return array_merge($tmdbImages,$tvdbImages);
+                break;
+            case 'Season':
+                return $this->serviceTmdb->getImages($item->getSerie()->getIdTmdb(),$item->getNumber());
+                break;
+            case 'Episode':
+                return $this->serviceTmdb->getImages($item->getSeason()->getSerie()->getIdTmdb(),$item->getSeason()->getNumber(),$item->getNumber());
+                break;
+            case 'Actor':
+                return $this->serviceTmdb->getActorImages($item->getIdTmdb());
+                break;
+              }
+    }  
     
-      
+    protected function insertImage($entite, $images)
+    {
+        foreach ($images as $item) {
+            $image = new Image();
+            $image->setType($item['type'])
+                ->setFormat($item['format'])
+                ->setUrl($item['url']);
+            $this->em->persist($image);                
+            $entite->addImage($image);
+        }
+        $this->em->persist($entite);  
+        $this->em->flush(); 
+    }          
 }    

@@ -59,8 +59,6 @@ class SeasonCommand extends BaseCommand
             $bar->finish();
         
         $output->writeln("\n<comment> Fin de la mise à jour</comment>");
-       
-     
     }
   
     /**
@@ -79,8 +77,7 @@ class SeasonCommand extends BaseCommand
             $season = $this->createSeason($info);
             $serie->addSeason($season);
             $this->em->persist($serie);
-            $this->em->persist($season);  
-           
+            $this->em->persist($season);
             
             return true;
         }
@@ -98,7 +95,7 @@ class SeasonCommand extends BaseCommand
               ->setAiredEpisodes($info['aired_episodes'])
               ->setRating($info['rating']); 
         
-        $this->insertImage($season,$info['images']);  
+  //      $this->insertImage($season,$info['images']);  
         
         return $season;
     }

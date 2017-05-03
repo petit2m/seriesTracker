@@ -17,15 +17,24 @@ class DefaultController extends Controller
       //   var_dump($series);die;
       //               //
          $serviceBS = $this->get('serviceTmdb');
-         $series = $serviceBS->getSerieImages(62852);
-         $series = $serviceBS->getConfiguration();
-         var_dump($series);die;
+         // $series = $serviceBS->getImages(1402);
+            $series = $serviceBS->getActorImages(18916);
+      // $series = $serviceBS->getConfiguration();
+         dump($series);die;
 
-//        $serviceBS = $this->get('serviceRestTvdb');
-    //    $series = $serviceBS->getSerieImageParams(279536);
+//       $serviceBS = $this->get('serviceRestTvdb');
+      // $series = $serviceBS->getSerieImageParams(273181);
+  //          $series = $serviceBS->getImages(273181);
   //      $series = $serviceBS->getSerieImagesSummary(279536);
-//        $series = $serviceBS->getSerieImages(279536,'series');
-//        var_dump($series);die;
+ //       $series = $serviceBS->getSerieImages(273181,'season');
+  //      dump($series);die;      
+        
+     //    $serviceBS = $this->get('serviceFanart');
+      // $series = $serviceBS->getSerieImageParams(273181);
+       //     $series = $serviceBS->getPeopleImages(273181);
+  //      $series = $serviceBS->getSerieImagesSummary(279536);
+   //   $series = $serviceBS->getSerieImages(273181,'season');
+        dump($series);die;
 
         // $serviceBS = $this->get('ServicePushBullet');
         // $push = $serviceBS->getPushes();

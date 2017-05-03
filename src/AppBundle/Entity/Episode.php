@@ -52,7 +52,7 @@ class Episode extends IllustratedItem
     /**
     * @var string
     *
-    * @ORM\Column(name="title", type="string", length=150, nullable=false)
+    * @ORM\Column(name="title", type="string", length=150, nullable=true)
     */
     private $title;
     

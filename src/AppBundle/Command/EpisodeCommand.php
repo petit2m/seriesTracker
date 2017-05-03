@@ -96,8 +96,6 @@ class EpisodeCommand extends BaseCommand
               ->setTitle($info['title'])
               ->setRating($info['rating']); 
         
-        $this->insertImage($episode,$info['images']);  
-        
         return $episode;
     }
 }    
